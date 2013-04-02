@@ -2,10 +2,16 @@ package utils;
 
 import java.security.InvalidParameterException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DateUtils {
+	private static final Logger logger = LoggerFactory
+			.getLogger(DateUtils.class);
 
 	private static final long MILLIS_IN_A_SECOND = 1000;
 
@@ -19,24 +25,28 @@ public class DateUtils {
 
 	private static final int MONTHS_IN_A_YEAR = 12;
 
-	//private static final int[] daysInMonth = new int[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	// private static final int[] daysInMonth = new int[] { 31, 28, 31, 30, 31,
+	// 30, 31, 31, 30, 31, 30, 31 };
 
 	/**
-	 * 最小日期，设定为1000年1月1日
+	 * 最小日期，设定为1900年1月1日
 	 */
-	public static final Date MIN_DATE = date(1000, 1, 1);
+	public static final Date MIN_DATE = date(1900, 1, 1);
 
 	/**
-	 * 最大日期，设定为8888年1月1日
+	 * 最大日期，设定为9999年12月31日
 	 */
-	public static final Date MAX_DATE = date(8888, 1, 1);
-	
+	public static final Date MAX_DATE = date(9999, 12, 31);
 
 	/**
 	 * 根据年月日构建日期对象。注意月份是从1开始计数的，即month为1代表1月份。
-	 * @param year 年
-	 * @param month 月。注意1代表1月份，依此类推。
-	 * @param day 日
+	 * 
+	 * @param year
+	 *            年
+	 * @param month
+	 *            月。注意1代表1月份，依此类推。
+	 * @param day
+	 *            日
 	 * @return
 	 */
 	public static Date date(int year, int month, int date) {
@@ -45,7 +55,7 @@ public class DateUtils {
 		calendar.set(Calendar.MILLISECOND, 0);
 		return calendar.getTime();
 	}
-	
+
 	/**
 	 * 计算两个日期（不包括时间）之间相差的周年数
 	 * 
@@ -190,11 +200,11 @@ public class DateUtils {
 	 * @return
 	 */
 	public static boolean isDateAfter(Date date1, Date date2) {
-		Date theDate1 = org.apache.commons.lang3.time.DateUtils.truncate(date1,
-				Calendar.DATE);
-		Date theDate2 = org.apache.commons.lang3.time.DateUtils.truncate(date2,
-				Calendar.DATE);
-		return theDate1.after(theDate2);
+		Date firstDate = org.apache.commons.lang3.time.DateUtils.truncate(
+				date1, Calendar.DATE);
+		Date secondDate = org.apache.commons.lang3.time.DateUtils.truncate(
+				date2, Calendar.DATE);
+		return firstDate.after(secondDate);
 	}
 
 	/**
@@ -454,9 +464,13 @@ public class DateUtils {
 
 	/**
 	 * 获得指定日期之后一段时期的日期。例如某日期之后3天的日期等。
-	 * @param origDate 基准日期
-	 * @param amount 时间数量
-	 * @param timeUnit 时间单位，如年、月、日等。用Calendar中的常量代表
+	 * 
+	 * @param origDate
+	 *            基准日期
+	 * @param amount
+	 *            时间数量
+	 * @param timeUnit
+	 *            时间单位，如年、月、日等。用Calendar中的常量代表
 	 * @return
 	 */
 	public static final Date dateAfter(Date origDate, int amount, int timeUnit) {
@@ -468,9 +482,13 @@ public class DateUtils {
 
 	/**
 	 * 获得指定日期之前一段时期的日期。例如某日期之前3天的日期等。
-	 * @param origDate 基准日期
-	 * @param amount 时间数量
-	 * @param timeUnit 时间单位，如年、月、日等。用Calendar中的常量代表
+	 * 
+	 * @param origDate
+	 *            基准日期
+	 * @param amount
+	 *            时间数量
+	 * @param timeUnit
+	 *            时间单位，如年、月、日等。用Calendar中的常量代表
 	 * @return
 	 */
 	public static final Date dateBefore(Date origDate, int amount, int timeUnit) {
@@ -478,5 +496,30 @@ public class DateUtils {
 		calendar.setTime(origDate);
 		calendar.add(timeUnit, -amount);
 		return calendar.getTime();
+	}
+
+	private static ThreadLocal<SimpleDateFormat> defaultDateFormat = new ThreadLocal<SimpleDateFormat>();
+
+	public static final SimpleDateFormat getDefaultDateFormat() {
+		if (null == defaultDateFormat.get()) {
+			defaultDateFormat.set(new SimpleDateFormat("yyyy/MM/dd"));
+		}
+
+		return defaultDateFormat.get();
+	}
+
+	public static final Date pareseDate(String date) {
+		Date result = null;
+		try {
+			result = getDefaultDateFormat().parse(date);
+		} catch (ParseException e) {
+			logger.error("Can't parse {} to Date", date);
+		}
+
+		return result;
+	}
+
+	public static final String formatDate(Date date) {
+		return getDefaultDateFormat().format(date);
 	}
 }
