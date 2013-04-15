@@ -1,4 +1,4 @@
-package utils;
+package utils.mail;
 
 public class SendEmail {
 	public SendEmail() {
