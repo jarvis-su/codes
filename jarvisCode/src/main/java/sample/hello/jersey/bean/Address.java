@@ -1,4 +1,4 @@
-package sample.hello.bean;
+package sample.hello.jersey.bean;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

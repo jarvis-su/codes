@@ -1,4 +1,4 @@
-package sample.hello.resources;
+package sample.hello.jersey.resources;
 
 import java.io.IOException;
 import java.net.URI;
@@ -20,9 +20,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 
-import sample.hello.bean.Address;
-import sample.hello.bean.Contact;
-import sample.hello.storage.ContactStore;
+import sample.hello.jersey.bean.Address;
+import sample.hello.jersey.bean.Contact;
+import sample.hello.jersey.storage.ContactStore;
 
 
 @Path("/contacts")

@@ -1,9 +1,9 @@
-package sample.hello.storage;
+package sample.hello.jersey.storage;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import sample.hello.bean.Provider;
+import sample.hello.jersey.bean.Provider;
 
 public class ProviderStore {
 

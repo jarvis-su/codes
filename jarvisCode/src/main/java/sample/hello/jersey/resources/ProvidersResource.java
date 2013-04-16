@@ -1,4 +1,4 @@
-package sample.hello.resources;
+package sample.hello.jersey.resources;
 
 import java.io.IOException;
 import java.net.URI;
@@ -19,8 +19,8 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import sample.hello.bean.Provider;
-import sample.hello.storage.ProviderStore;
+import sample.hello.jersey.bean.Provider;
+import sample.hello.jersey.storage.ProviderStore;
 
 @Path("/providers")
 public class ProvidersResource {
