@@ -1,4 +1,4 @@
-package sample.hello.util;
+package sample.hello.jersey.util;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package sample.hello.resources;
+package sample.hello.jersey.resources;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,10 +16,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.JAXBElement;
 
-import sample.hello.bean.Address;
-import sample.hello.bean.Contact;
-import sample.hello.storage.ContactStore;
-import sample.hello.util.ParamUtil;
+import sample.hello.jersey.bean.Address;
+import sample.hello.jersey.bean.Contact;
+import sample.hello.jersey.storage.ContactStore;
+import sample.hello.jersey.util.ParamUtil;
 
 import com.sun.jersey.api.NotFoundException;
 

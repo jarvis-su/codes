@@ -1,11 +1,11 @@
-package sample.hello.storage;
+package sample.hello.jersey.storage;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import sample.hello.bean.Address;
-import sample.hello.bean.Contact;
+import sample.hello.jersey.bean.Address;
+import sample.hello.jersey.bean.Contact;
 
 public class ContactStore {
 	private static Map<String,Contact> store;

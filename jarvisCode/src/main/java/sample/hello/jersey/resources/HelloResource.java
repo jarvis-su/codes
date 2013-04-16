@@ -1,4 +1,4 @@
-package sample.hello.resources;
+package sample.hello.jersey.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

@@ -1,4 +1,4 @@
-package sample.hello.resources;
+package sample.hello.jersey.resources;
 
 import java.util.Map;
 
@@ -15,9 +15,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.JAXBElement;
 
-import sample.hello.bean.Provider;
-import sample.hello.storage.ProviderStore;
-import sample.hello.util.ParamUtil;
+import sample.hello.jersey.bean.Provider;
+import sample.hello.jersey.storage.ProviderStore;
+import sample.hello.jersey.util.ParamUtil;
 
 import com.sun.jersey.api.NotFoundException;
 
