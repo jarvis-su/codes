@@ -30,6 +30,7 @@ public class ContactResource {
 	Request request;
 	String contact;
 	
+	
 	public ContactResource(UriInfo uriInfo, Request request, String contact) {
 		this.uriInfo = uriInfo;
 		this.request = request;
