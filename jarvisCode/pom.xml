@@ -105,7 +105,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.24</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.jmesa</groupId>
+			<artifactId>jmesa</artifactId>
+			<version>3.0.4</version>
+		</dependency>
 
 	</dependencies>
 	<build>

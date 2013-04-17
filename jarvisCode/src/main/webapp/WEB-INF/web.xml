@@ -20,6 +20,19 @@
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
 
+	<context-param>
+		<param-name>jmesaPreferencesLocation</param-name>
+		<param-value>WEB-INF/jmesa.properties</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>ExportServlet</servlet-name>
+		<servlet-class>sample.jmesa.demo.ExportServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ExportServlet</servlet-name>
+		<url-pattern>/ExportServlet</url-pattern>
+	</servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
