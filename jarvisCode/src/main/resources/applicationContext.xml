@@ -52,6 +52,7 @@
         <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
      </tx:attributes>  
   </tx:advice>
+  
   <aop:config>
      <!--把事务控制在Service层-->
      <aop:pointcut id="pc" expression="execution(* com.pb.mybatis.service.*.*(..))"/>
