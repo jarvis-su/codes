@@ -5,6 +5,7 @@ import java.io.File;
 public class CallExe {
 	public static void main(String[] args) {
 		Runtime rt = Runtime.getRuntime();
+		@SuppressWarnings("unused")
 		Process p = null;
 		String fileLac = "";
 		try {
