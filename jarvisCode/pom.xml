@@ -105,11 +105,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.24</version>
 		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-mxj</artifactId>
-			<version>5.0.12</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.jmesa</groupId>
@@ -157,6 +152,12 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
 			<version>3.2.2.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mx4j</groupId>
+			<artifactId>mx4j</artifactId>
+			<version>3.0.2</version>
 		</dependency>
 	</dependencies>
 	<build>
