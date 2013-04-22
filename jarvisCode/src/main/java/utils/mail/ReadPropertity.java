@@ -8,7 +8,7 @@ public class ReadPropertity {
 	static {
 		try {
 			props.load(ReadPropertity.class.getClassLoader()
-					.getResourceAsStream("utils.properties"));
+					.getResourceAsStream("Email_config.properties"));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
