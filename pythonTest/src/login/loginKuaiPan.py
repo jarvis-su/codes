@@ -13,6 +13,13 @@ class Login_kp:
     
     def login(self, username, password): #登录
         print('请等待，正在登陆中..........')
+        
+        # proxy setting
+#         proxy_support = urllib.request.ProxyHandler({'http': '10.237.80.137:8080'})
+#         opener = urllib.request.build_opener(proxy_support)
+#         urllib.request.install_opener(opener)
+        #end proxy setting
+
         # 快盘的登录地址
         url = 'https://www.kuaipan.cn/index.php?ac=account&op=login'
         #定义post数据，账号和密码,封装成 ?username=username&userpwd=userpwd

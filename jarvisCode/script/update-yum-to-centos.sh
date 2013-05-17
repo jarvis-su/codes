@@ -7,6 +7,7 @@ if [ $(id -u) != "0" ]; then
     exit 1
 fi
  
+ 
 clear
 echo "========================================================================="
 echo "Replace Redhat Enterprise Yum to CentOS Yum and Repos,  Written by Licess"
