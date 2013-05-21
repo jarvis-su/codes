@@ -6,4 +6,3 @@ the_page = response.read()
 print(the_page)
 
 
-
