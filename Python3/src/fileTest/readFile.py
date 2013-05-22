@@ -11,11 +11,16 @@ for parent,dirnames,filenames in os.walk(rootdir):
        print ( " parent is:" + parent)   
        print ( " filename with full path:" + os.path.join(parent,filename)) 
 
-fileName = rootdir+'/JTracTSGPRD-55136.htm'
-print(fileName)
-file = open(fileName,'r')
-try:
-    fileText = file.read();
-#     print(fileText)
-finally:
-    file.close()
+def getFileText(fileName):
+    fileName = rootdir+'/JTracTSGPRD-55136.htm'
+    print(fileName)
+    file = open(fileName,'r')
+    try:
+        fileText = file.read();
+#     list_of_all_the_lines = file.readlines()
+#     print(list_of_all_the_lines)
+    finally:
+        file.close()
+    return fileText
+# for line in list_of_all_the_lines:
+#     print(line)

@@ -6,6 +6,7 @@ Created on May 20, 2013
 
 
 from bs4 import BeautifulSoup
+import fileTest.readFile
 import re
 
 doc = ['<html><head><title>Page title</title></head>',
@@ -19,3 +20,5 @@ print(soup.prettify())
 if __name__ == '__main__':
     pass
 print('ddddddddddd')
+t = fileTest.readFile.getFileText('ddd')
+print(t)
