@@ -28,7 +28,16 @@ for table in tables:
     trs = table.find_all('tr')
     for tr in trs:
 #         print(tr)
+        tr_text = ''
         tds = tr.find_all('td')
+        data = {}
+        i = 0
         for td in tds:
-            print(td.text)
+#             print(td.text)
+            tr_text = tr_text + td.text + ','
+            data[i] = td.text
+            i = i+1
+        print(tr_text)
+        
+        
   count = count +1
