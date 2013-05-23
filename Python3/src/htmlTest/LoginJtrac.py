@@ -1,16 +1,5 @@
 import urllib.request  
 import http.cookiejar  
-import html.parser
-import re  
-import os  
-import shutil  
-filePath = "E:\\temp"  
-      
-if  os.path.isdir(filePath):  
-        shutil.rmtree(filePath)  
-elif os.path.isfile(filePath):  
-        os.remove(filePath)  
-os.makedirs(filePath)  
 
 loginUrl = 'http://kbserver/workflow/app/login/wicket:interface/%3A2%3Aform%3A%3AIFormSubmitListener%3A%3A/'
 
@@ -30,23 +19,17 @@ def loginJtrac(user, pwd):
     res = urllib.request.urlopen(req, params)
     html=res.read().decode('utf-8')
          #调试开关 可以查看登录成功后html页面中的关键字
-    print(html)
+#     print(html)
     
     #设置cookie  
 cookie = http.cookiejar.CookieJar() 
 cookieProc = urllib.request.HTTPCookieProcessor(cookie) 
 opener = urllib.request.build_opener(cookieProc) 
 urllib.request.install_opener(opener)
-    
- 
+  
 
-
-# urlRefresh='http://kbserver/workflow/app/item/TSGPRD-54897/'
-# strRefresh={'res_id':'XXX'}
-# print('刷新结果：'+GetUrlRequest(urlRefresh,strRefresh))
-
-
-loginJtrac('jsu','sujiesujie')
-res1 = urllib.request.urlopen('http://kbserver/workflow/app/item/TSGPRD-54897/')
-html1=res1.read().decode('utf-8')
-print(html1)
+def loginJtracAndGet(user, pwd, url):
+    loginJtrac(user, pwd)
+    res1 = urllib.request.urlopen('http://kbserver/workflow/app/item/TSGPRD-54897/')
+    html1=res1.read().decode('utf-8')
+    return html1
