@@ -19,4 +19,6 @@ user = 'jsu'
 pwd = 'sujiesujie'
 url ='http://kbserver/workflow/app/item/TSGPRD-54897/'
 t = htmlTest.LoginJtrac.loginJtracAndGet(user, pwd, url)
+
 print(t)
+

@@ -13,8 +13,8 @@ def loginJtrac(user, pwd):
     req.add_header('Accept-Charset', 'GBK,utf-8;q=0.7,*;q=0.3')
     req.add_header('Accept-Encoding','gzip,deflate,sdch')
     params = urllib.parse.urlencode({'loginName': user,
-                                          'password': pwd,
-                                          'Submit': 'Submit'})    
+                                     'password': pwd,
+                                     'Submit': 'Submit'})    
     params = params.encode('ISO-8859-1')
     res = urllib.request.urlopen(req, params)
     html=res.read().decode('utf-8')
@@ -30,6 +30,6 @@ urllib.request.install_opener(opener)
 
 def loginJtracAndGet(user, pwd, url):
     loginJtrac(user, pwd)
-    res1 = urllib.request.urlopen('http://kbserver/workflow/app/item/TSGPRD-54897/')
+    res1 = urllib.request.urlopen(url)
     html1=res1.read().decode('utf-8')
     return html1
