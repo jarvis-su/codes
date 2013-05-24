@@ -36,7 +36,9 @@ for table in tables:
             i = 0
             for td in tds:
                 tr_text = tr_text + td.text + ','
-                data[i] = td.text
+                td_context = td.text
+                td_context = td_context.strip().lstrip().rstrip("\'")
+                data[i] = td_context
                 i = i+1
             print(tr_text)
             if data.__len__()>0:
