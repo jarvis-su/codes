@@ -14,6 +14,14 @@ url ='http://kbserver/workflow/app/item/' + Ticket_id
 
 conn = sqlite3.connect('D:/data/sqlite3/jtrac')
 
+def isTicketExisted(conn, ticket_id):
+    sql = 'select * from info where trim(ticket_id) = \'' + ticket_id + '\'';
+    c = conn.cursor()
+    res = c.execute(sql)
+    res.fetchall()
+    c.close()
+    
+
 def clearExistedData(conn, ticket_id):
     sql = 'delete from info where trim(ticket_id) = \'' + ticket_id + '\'';
     print(sql)
