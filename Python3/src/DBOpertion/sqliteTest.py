@@ -10,7 +10,12 @@ if __name__ == '__main__':
 
 conn = sqlite3.connect('D:/data/sqlite3/jtrac')
 c = conn.cursor()
-c.execute("insert into t values (3,'jarvis')")
+# c.execute("insert into t values (3,'jarvis')")
 conn.commit()
 rec = c.execute("select * from t")
-print(c.fetchall())
+# print(c.fetchall())
+res = c.fetchall()
+for r in res:
+    id = r[0]
+    name = r[1]
+    print('id = ' + id +' and name = '+ name)
