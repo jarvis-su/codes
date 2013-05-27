@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
 user = 'jsu'
 pwd = 'sujiesujie'
-Ticket_id = 'TSGPRD-54897'
+Ticket_id = 'TSGPRD-56019'
 url ='http://kbserver/workflow/app/item/' + Ticket_id
 
 response = htmlTest.LoginJtrac.loginJtracAndGet(user, pwd, url)
@@ -37,7 +37,7 @@ for table in tables:
             for td in tds:
                 tr_text = tr_text + td.text + ','
                 td_context = td.text
-                td_context = td_context.strip().lstrip().rstrip("\'")
+                td_context = td_context.replace("\'"," ")
                 data[i] = td_context
                 i = i+1
             print(tr_text)
