@@ -8,11 +8,11 @@ import sqlite3
 
 import htmlTest.LoginJtrac
 
-def getPageInfoAndStore(Ticket_id, url):
+def getPageInfoAndStore(Ticket_id, url, needLogin):
     user = 'jsu'
     pwd = 'sujiesujie'
     
-    response = htmlTest.LoginJtrac.loginJtracAndGet(user, pwd, url)
+    response = htmlTest.LoginJtrac.loginJtracAndGet(user, pwd, url, needLogin)
     
     # print(response)
     soup =BeautifulSoup(response)

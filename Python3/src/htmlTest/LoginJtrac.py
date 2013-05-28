@@ -28,8 +28,9 @@ opener = urllib.request.build_opener(cookieProc)
 urllib.request.install_opener(opener)
   
 
-def loginJtracAndGet(user, pwd, url):
-    loginJtrac(user, pwd)
+def loginJtracAndGet(user, pwd, url, needLogin):
+    if(needLogin):
+        loginJtrac(user, pwd)
     res1 = urllib.request.urlopen(url)
     html1=res1.read().decode('utf-8')
     return html1

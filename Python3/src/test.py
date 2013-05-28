@@ -25,5 +25,9 @@ print('hello')
 
 print(DBOperation.sqliteOperation.getAllData('t'))
 
+t = {1,34,5}
+print(len(t))
+print(1<3)
+
 
 
