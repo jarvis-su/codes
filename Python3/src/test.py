@@ -7,7 +7,7 @@ import webbrowser
 import os 
 
 import htmlTest.LoginJtrac
-import DBOperation.sqliteOpertion
+import DBOperation.sqliteOperation
 
 if __name__ == '__main__':
     pass
@@ -23,7 +23,7 @@ print('hello')
 
 # print(t)
 
-print(DBOperation.sqliteOpertion.getData('t'))
+print(DBOperation.sqliteOperation.getAllData('t'))
 
 
 
