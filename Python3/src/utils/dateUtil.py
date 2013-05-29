@@ -22,7 +22,8 @@ def parseToDate(dateStr):
     return t
 
 def convertToTianjin(jtracDatetime):
-    tj = ''
+    delta = 13 # hours
+    tj = jtracDatetime + datetime.timedelta(hours=delta)
     return tj
 
 def isHolidayOrWeekEnd(date):
@@ -33,9 +34,11 @@ def calculateNonWorkingHours(beginDate, endDate):
     nonWork = 0
     return nonWork
 
-test ='2013-05-14 22:06:22'
+test ='2013-05-14 20:06:22'
 t1 = parseToDate(test)
 print(t1)
+t2 = convertToTianjin(t1)
+print(t2)
 
 dt = datetime.datetime.now()
 print ('(%Y-%m-%d %H:%M:%S %f):', dt.strftime('%Y-%m-%d %H:%M:%S %f'))
