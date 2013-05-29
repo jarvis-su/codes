@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import sqlite3
 
 import htmlTest.LoginJtrac
+import utils.dateUtil
 
 def getPageInfoAndStore(Ticket_id, url, needLogin):
     user = 'jsu'
@@ -42,6 +43,10 @@ def getPageInfoAndStore(Ticket_id, url, needLogin):
                     Assigned_To = data[2]
                     Comment = data[3]
                     Time_Stamp = data[4]
+                    t1 = utils.dateUtil.parseToDate(Time_Stamp) 
+                    t2 = utils.dateUtil.convertToTianjin(t1)
+                    TJ_datetime = utils.dateUtil.parseToString(t2)  
+                    print('TJ_datetime==========' + TJ_datetime)                  
                     Ticket_Type = data[5]
                     Priority = data[6]
                     Urgency = data[7]
@@ -50,7 +55,7 @@ def getPageInfoAndStore(Ticket_id, url, needLogin):
                     State = data[10]
                     Program_Agency = data[11]
                     Component = data[12]
-                    sql = "insert into info values('"+Ticket_id+"','"+Logged_By+"','"+Status+"','"+Assigned_To+"','"+Comment+"','"+Time_Stamp+"','"+Ticket_Type+"','"+Priority+"','"+Urgency+"','"+Impact+"','"+Product+"','"+State+"','"+Program_Agency+"','"+Component+"')"
+                    sql = "insert into info values('"+Ticket_id+"','"+Logged_By+"','"+Status+"','"+Assigned_To+"','"+Comment+"','"+Time_Stamp +"','"+TJ_datetime+"','"+Ticket_Type+"','"+Priority+"','"+Urgency+"','"+Impact+"','"+Product+"','"+State+"','"+Program_Agency+"','"+Component+"')"
                     print(sql)
                     c.execute(sql)
                     conn.commit()
