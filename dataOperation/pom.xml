@@ -7,7 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>dataOperation Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-	
+
 
 	<properties>
 		<mavenVersion>2.1</mavenVersion>
@@ -155,7 +155,6 @@
 			<artifactId>bonecp-spring</artifactId>
 			<version>${bonecp.version}</version>
 		</dependency>
-
 
 	</dependencies>
 	<build>
