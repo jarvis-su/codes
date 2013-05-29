@@ -2,3 +2,4 @@ eclipse.preferences.version=1
 encoding//src/htmlTest/AutoLogin.py=UTF-8
 encoding//src/htmlTest/LoginJtrac.py=UTF-8
 encoding//src/htmlTest/processPageInfo.py=UTF-8
+encoding//src/utils/dateUtil.py=UTF-8
