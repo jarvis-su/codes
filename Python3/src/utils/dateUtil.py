@@ -6,6 +6,7 @@ Created on May 29, 2013
 from datetime import * 
 import datetime  
 import time
+import calendar
 
 if __name__ == '__main__':
     pass
@@ -26,19 +27,33 @@ def convertToTianjin(jtracDatetime):
     tj = jtracDatetime + datetime.timedelta(hours=delta)
     return tj
 
+def isWeekend(date):
+    if (date.weekday()== calendar.SATURDAY or date.weekday() == calendar.SUNDAY):
+        return True
+    else:
+        return False
+
+def isHoliday(date):
+    rt = False
+    return rt
+
+
 def isHolidayOrWeekEnd(date):
-    
-    return False
+    if (isWeekend(date) or isHoliday(date)):
+        return True
+    else:
+        return False
 
 def calculateNonWorkingHours(beginDate, endDate):
     nonWork = 0
     return nonWork
 
-test ='2013-05-14 20:06:22'
+test ='2013-05-17 20:06:22'
 t1 = parseToDate(test)
 print(t1)
 t2 = convertToTianjin(t1)
 print(t2)
+print(isHolidayOrWeekEnd(t2))
 
 dt = datetime.datetime.now()
 print ('(%Y-%m-%d %H:%M:%S %f):', dt.strftime('%Y-%m-%d %H:%M:%S %f'))
