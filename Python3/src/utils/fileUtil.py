@@ -13,13 +13,23 @@ if __name__ == '__main__':
     pass
 
 def getTicketsList(fileName):
-    list = {}
+    list = []
     file = open(fileName,'r')
     try:
-        fileText = file.read()
-#         lines = fileText.readlines()
-        for l in fileText:
-            list.append(l)
+#         fileText = file.read()
+        i = 0
+        lines = file.readlines()
+        for l in lines:
+            s = l.replace('\n','')
+            list+=[s]
+#             print(s)
+            i=i+1
+#         while 1 :
+#             line = file.readline()
+#             if not line:
+#                 break
+#             list += [line]
+
     finally:
         file.close()
     return list
@@ -27,3 +37,5 @@ def getTicketsList(fileName):
 f = 'E:/temp/tickets.txt'
 t = getTicketsList(f)
 print(t)
+for tt in t:
+    print(tt)
