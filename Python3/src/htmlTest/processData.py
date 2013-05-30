@@ -5,12 +5,15 @@ Created on May 27, 2013
 '''
 import sqlite3
 import htmlTest.processPageInfo
+import utils.fileUtil
 
 if __name__ == '__main__':
     pass
 
-Ticket_id = 'TSGPRD-55055'
-url ='http://kbserver/workflow/app/item/' + Ticket_id
+# Ticket_id = 'TSGPRD-55055'
+# url ='http://kbserver/workflow/app/item/' + Ticket_id
+
+ticketsFile = 'E:/temp/tickets.txt'
 
 conn = sqlite3.connect('D:/data/sqlite3/jtrac')
 
@@ -31,7 +34,8 @@ def clearExistedData(conn, ticket_id):
     conn.commit()
     c.close()
 
-tickets = {'TSGPRD-56019','TSGPRD-54959','TSGPRD-53803','TSGPRD-55080','TSGPRD-55091','TSGPRD-55136','TSGPRD-55309','TSGPRD-55289','TSGPRD-45816','TSGPRD-55245','TSGPRD-55132','TSGPRD-55055','RELMGMTEPS-9418','RELMGMTEPS-9481','TSGPRD-55718','TSGPRD-55620','TSGPRD-55759','TSGPRD-55822','TSGPRD-56138'}
+# tickets = {'TSGPRD-56019','TSGPRD-54959','TSGPRD-53803','TSGPRD-55080','TSGPRD-55091','TSGPRD-55136','TSGPRD-55309','TSGPRD-55289','TSGPRD-45816','TSGPRD-55245','TSGPRD-55132','TSGPRD-55055','RELMGMTEPS-9418','RELMGMTEPS-9481','TSGPRD-55718','TSGPRD-55620','TSGPRD-55759','TSGPRD-55822','TSGPRD-56138'}
+tickets = utils.fileUtil.getTicketsList(ticketsFile)
 needLogin = True
 for Ticket_id in tickets:
     url ='http://kbserver/workflow/app/item/' + Ticket_id

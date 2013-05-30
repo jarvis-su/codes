@@ -8,6 +8,8 @@ import os
 
 import htmlTest.LoginJtrac
 import DBOperation.sqliteOperation
+import utils.fileUtil
+
 
 if __name__ == '__main__':
     pass
@@ -23,11 +25,17 @@ print('hello')
 
 # print(t)
 
-print(DBOperation.sqliteOperation.getAllData('t'))
+# print(DBOperation.sqliteOperation.getAllData('t'))
 
 t = {1,34,5}
 print(len(t))
 print(1<3)
 
+
+f = 'E:/temp/tickets.txt'
+t = utils.fileUtil.getTicketsList(f)
+print(t)
+for tt in t:
+    print(tt)
 
 
