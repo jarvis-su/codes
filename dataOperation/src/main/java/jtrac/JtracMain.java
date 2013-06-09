@@ -133,9 +133,9 @@ public class JtracMain {
 		Calendar bc = Calendar.getInstance();
 		Calendar ec = Calendar.getInstance();
 		ec.setTime(end);
+		Calendar nextDateToCompare = Calendar.getInstance();
 		while (begin.before(DateUtil.truncDate(end))) {
 			bc.setTime(begin);
-			Calendar nextDateToCompare = Calendar.getInstance();
 
 			if (bc.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
 				nextDateToCompare.setTime(begin);
@@ -171,7 +171,7 @@ public class JtracMain {
 					hours += calculateDiffHours(begin,
 							nextDateToCompare.getTime());
 				} else {
-					hours +=16;
+					hours += 16;
 				}
 			}
 
@@ -190,6 +190,55 @@ public class JtracMain {
 
 			System.out.println("hours " + hours);
 			begin = DateUtil.truncDate(DateUtil.addDays(bc.getTime(), 1));
+		}
+		if (ec.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+			hours += calculateDiffHours(begin, end);
+		} else if (ec.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+			if (ec.get(Calendar.HOUR_OF_DAY) >= 20) {
+				nextDateToCompare.setTime(end);
+				nextDateToCompare.set(Calendar.HOUR_OF_DAY, 20);
+				nextDateToCompare.set(Calendar.MINUTE, 0);
+				nextDateToCompare.set(Calendar.SECOND, 0);
+				nextDateToCompare.set(Calendar.MILLISECOND, 0);
+				hours += calculateDiffHours(begin, nextDateToCompare.getTime());
+			} else {
+				hours += calculateDiffHours(begin, end);
+			}
+
+		} else if (ec.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+			if (ec.get(Calendar.HOUR_OF_DAY) >= 4) {
+				nextDateToCompare.setTime(end);
+				nextDateToCompare.add(Calendar.DAY_OF_MONTH, 1);
+				if (bc.get(Calendar.HOUR_OF_DAY) <= 4) {
+					bc.set(Calendar.HOUR_OF_DAY, 4);
+					bc.set(Calendar.MINUTE, 0);
+					bc.set(Calendar.SECOND, 0);
+					bc.set(Calendar.MILLISECOND, 0);
+				}
+				hours += calculateDiffHours(bc.getTime(),
+						DateUtil.truncDate(nextDateToCompare.getTime()));
+			}
+
+		} else {
+			bc.setTime(begin);
+			if (bc.get(Calendar.HOUR_OF_DAY) <= 4) {
+				bc.set(Calendar.HOUR_OF_DAY, 4);
+				bc.set(Calendar.MINUTE, 0);
+				bc.set(Calendar.SECOND, 0);
+				bc.set(Calendar.MILLISECOND, 0);
+			}
+
+			if (ec.get(Calendar.HOUR_OF_DAY) >= 4) {
+				if (ec.get(Calendar.HOUR_OF_DAY) >= 20) {
+					nextDateToCompare.setTime(end);
+					nextDateToCompare.set(Calendar.HOUR_OF_DAY, 20);
+					nextDateToCompare.set(Calendar.MINUTE, 0);
+					nextDateToCompare.set(Calendar.SECOND, 0);
+					nextDateToCompare.set(Calendar.MILLISECOND, 0);
+				}
+				hours += calculateDiffHours(bc.getTime(),nextDateToCompare.getTime());
+			}
+
 		}
 
 		return hours;
