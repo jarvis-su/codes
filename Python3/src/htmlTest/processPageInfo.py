@@ -55,7 +55,7 @@ def getPageInfoAndStore(Ticket_id, url, needLogin):
                     State = data[10]
                     Program_Agency = data[11]
                     Component = data[12]
-                    sql = "insert into info values('"+Ticket_id+"','"+Logged_By+"','"+Status+"','"+Assigned_To+"','"+Comment+"','"+Time_Stamp +"','"+TJ_datetime+"','"+Ticket_Type+"','"+Priority+"','"+Urgency+"','"+Impact+"','"+Product+"','"+State+"','"+Program_Agency+"','"+Component+"')"
+                    sql = "insert into info values('"+Ticket_id+"','"+Logged_By+"','"+Status+"','"+Assigned_To+"','"+Time_Stamp+"','"+ TJ_datetime+"','"+Comment+"','"+Ticket_Type+"','"+Priority+"','"+Urgency+"','"+Impact+"','"+Product+"','"+State+"','"+Program_Agency+"','"+Component+"')"
                     print(sql)
                     c.execute(sql)
                     conn.commit()
