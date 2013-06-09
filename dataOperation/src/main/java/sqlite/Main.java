@@ -34,6 +34,11 @@ public class Main {
 		}
 		System.out.println(sdf.format(beginDate));
 		System.out.println(sdf.format(endDate));
+
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.HOUR_OF_DAY, 20);
+		System.out.println(sdf.format(c.getTime()));
+
 		getNonWorkingHours(beginDate,endDate);
 	}
 

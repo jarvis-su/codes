@@ -26,7 +26,9 @@ public class JtracMain {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		JtracInfo info = Jtrac.getAndPackJtracInfo("TSGPRD-56552");
+		JtracInfo info = Jtrac.getAndPackJtracInfo("TSGPRD-56413");
+		JtracMain main = new JtracMain();
+
 		Date openDate = null;
 		Date receivedDate = null;
 		Date acceptDate = null;
@@ -76,7 +78,7 @@ public class JtracMain {
 				}
 				// Calculate the acknowledge time
 				if (isAccepted && nonWorkingHoursIn1stAcknowledge <= 0) {
-					totalNonWorkingHrs += calculateNonWorkingHours(
+					totalNonWorkingHrs += main.calculateNonWorkingHours(
 							receivedDate, acceptDate);
 					nonWorkingHoursIn1stAcknowledge = totalNonWorkingHrs;
 				}
@@ -88,8 +90,9 @@ public class JtracMain {
 
 				if (isAccepted && !isInHands && isAssignedToOffshore(d)) {
 					isInHands = true;
-					float notInHands = calculateDiffHours(dateNotInHands, date);
-					System.out.println("dateNotInHands = " + notInHands);
+					float notInHands = main.calculateDiffHours(dateNotInHands,
+							date);
+					System.out.println("hours Not In Hands = " + notInHands);
 				}
 
 				// if (ECC_L3_GROUP_NAME.equals(d.getAssignedTo())
@@ -119,15 +122,76 @@ public class JtracMain {
 				|| d.getAssignedTo().startsWith(ECC_TIANJIN);
 	}
 
-	public static float calculateNonWorkingHours(Date begin, Date end) {
-		float hours = 0.0f;
-		return hours;
-	}
-
-	public static float calculateDiffHours(Date begin, Date end) {
+	public float calculateDiffHours(Date begin, Date end) {
 		float hours = 0.0f;
 		hours = (float) ((end.getTime() - begin.getTime()) / 1000.0 / 60.0 / 60.0);
 		return hours;
 	}
 
+	public float calculateNonWorkingHours(Date begin, Date end) {
+		float hours = 0.0f;
+		Calendar bc = Calendar.getInstance();
+		Calendar ec = Calendar.getInstance();
+		ec.setTime(end);
+		while (begin.before(DateUtil.truncDate(end))) {
+			bc.setTime(begin);
+			Calendar nextDateToCompare = Calendar.getInstance();
+
+			if (bc.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+				nextDateToCompare.setTime(begin);
+				nextDateToCompare.add(Calendar.DAY_OF_MONTH, 1);
+				nextDateToCompare.setTime(DateUtil.truncDate(nextDateToCompare
+						.getTime()));
+				hours += calculateDiffHours(begin, nextDateToCompare.getTime());
+			}
+
+			if (bc.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+				if (bc.get(Calendar.HOUR_OF_DAY) <= 20) {
+					nextDateToCompare.setTime(begin);
+					nextDateToCompare.set(Calendar.HOUR_OF_DAY, 20);
+					nextDateToCompare.set(Calendar.MINUTE, 0);
+					nextDateToCompare.set(Calendar.SECOND, 0);
+					nextDateToCompare.set(Calendar.MILLISECOND, 0);
+					hours += calculateDiffHours(begin,
+							nextDateToCompare.getTime());
+				}
+			}
+
+			if (bc.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY
+					|| bc.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY
+					|| bc.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY
+					|| bc.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
+				if (bc.get(Calendar.HOUR_OF_DAY) > 4
+						&& bc.get(Calendar.HOUR_OF_DAY) > 20) {
+					nextDateToCompare.setTime(begin);
+					nextDateToCompare.set(Calendar.HOUR_OF_DAY, 20);
+					nextDateToCompare.set(Calendar.MINUTE, 0);
+					nextDateToCompare.set(Calendar.SECOND, 0);
+					nextDateToCompare.set(Calendar.MILLISECOND, 0);
+					hours += calculateDiffHours(begin,
+							nextDateToCompare.getTime());
+				} else {
+					hours +=16;
+				}
+			}
+
+			if (bc.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+				if (bc.get(Calendar.HOUR_OF_DAY) >= 4) {
+					nextDateToCompare.setTime(begin);
+					nextDateToCompare.add(Calendar.DAY_OF_MONTH, 1);
+					nextDateToCompare.setTime(DateUtil
+							.truncDate(nextDateToCompare.getTime()));
+					hours += calculateDiffHours(begin,
+							nextDateToCompare.getTime());
+				} else {
+					hours += 20.0;
+				}
+			}
+
+			System.out.println("hours " + hours);
+			begin = DateUtil.truncDate(DateUtil.addDays(bc.getTime(), 1));
+		}
+
+		return hours;
+	}
 }
