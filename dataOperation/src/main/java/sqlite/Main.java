@@ -17,15 +17,18 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 //		method();
-		String formatStr ="yyyy-dd-MM HH:mm:ss";
+		String formatStr ="yyyy-MM-dd HH:mm:ss";
 		SimpleDateFormat sdf = new SimpleDateFormat(formatStr);
-		String beginStr ="2013-05-30 15:31:57";
-		String endStr = "2013-06-03 15:31:57";
+		String beginStr ="2013-06-04 18:34:49";
+		String endStr = "2013-06-04 19:00:00";
 		Date beginDate = new Date();
 		Date endDate = new Date();
 		try {
 			beginDate = sdf.parse(beginStr);
 			endDate = sdf.parse(endStr);
+
+			float hours = (float) ((endDate.getTime() - beginDate.getTime())/1000.0/60.0/60.0);
+			System.out.println(hours);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -54,11 +57,11 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void getNonWorkingHours(Date begin, Date end){
 		Calendar c = Calendar.getInstance();
 		c.setTime(begin);
-		
+
 	}
 
 }
