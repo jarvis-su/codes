@@ -54,19 +54,20 @@ public class FileReaderTest {
 					lastname = tmp[1];
 					cardholderInsertDate = tmp[5];
 					altIdentification = findAltIdentification(caseId, lastname, cardholderInsertDate);
-					String line = bufferLine + altIdentification;
-					System.out.println(line);
-
-					bwInsertFile.append(line);
-					bwInsertFile.newLine();
-					bwInsertFile.flush();
 
 					Date date = new Date();
 					// 08/29/2011 19:59:08
 					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 					date = sdf.parse(cardholderInsertDate);
 
-					getPerson(caseId, altIdentification, date);
+					Cardholder ch = getPerson(caseId, altIdentification, date);
+
+					String line = ch.getPersonId() + "," + ch.getCardholderId() + "," + altIdentification + "," + bufferLine;
+					// System.out.println(line);
+
+					bwInsertFile.append(line);
+					bwInsertFile.newLine();
+					bwInsertFile.flush();
 				}
 				bufferLine = br.readLine();
 			}
@@ -126,15 +127,20 @@ public class FileReaderTest {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			String url = "jdbc:oracle:thin:@10.237.89.143:1521:tj11gdb4";
-			c = DriverManager.getConnection(url, "ECCNC_60D_053113_01", "ECCNC_60D_053113_01");
+			c = DriverManager.getConnection(url, "ECCNC_FULL_070413_01", "ECCNC_FULL_070413_01");
 			ps = c.prepareStatement(getCardholder, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ps.setString(1, caseId);
 			ps.setTimestamp(2, new java.sql.Timestamp(insertDate.getTime()));
 			ps.setString(3, altIdentification);
 			rs = ps.executeQuery();
-			if (rs.next()) {
+			int count = 0;
+			while (rs.next()) {
 				ch.setPersonId(rs.getLong("PERSON_ID"));
 				ch.setCardholderId(rs.getLong("CARDHOLDER_ID"));
+				count++;
+			}
+			if (count > 1) {
+				System.out.println("caseId = " + caseId + " altIdentification = " + altIdentification + " Count = " + count);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
