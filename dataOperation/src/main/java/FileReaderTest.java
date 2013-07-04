@@ -5,12 +5,20 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FileReaderTest {
 
 	static String fileName1 = "E:\\Document\\L3\\Tickets_NC\\TSGPRD-57413\\Dup cardholder report-0704.csv";
 	static String fileName2 = "E:\\Document\\L3\\Tickets_NC\\TSGPRD-57413\\export-0704.csv";
-	static String fileName3 = "E:\\Document\\L3\\Tickets_NC\\TSGPRD-57413\\t.csv";
+	static String fileName3 = "E:\\Document\\L3\\Tickets_NC\\TSGPRD-57413\\test\\teee.csv";
 
 	public static void main(String[] args) {
 		String bufferLine;
@@ -38,7 +46,6 @@ public class FileReaderTest {
 			bwInsertFile = new BufferedWriter(new FileWriter(wInsertFile, true));
 
 			while (bufferLine != null) {
-
 				if (bufferLine.startsWith("CASE_NBR")) {
 					System.out.println("Title " + bufferLine);
 				} else {
@@ -53,12 +60,21 @@ public class FileReaderTest {
 					bwInsertFile.append(line);
 					bwInsertFile.newLine();
 					bwInsertFile.flush();
+
+					Date date = new Date();
+					// 08/29/2011 19:59:08
+					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+					date = sdf.parse(cardholderInsertDate);
+
+					getPerson(caseId, altIdentification, date);
 				}
 				bufferLine = br.readLine();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		} finally {
 			try {
@@ -69,7 +85,6 @@ public class FileReaderTest {
 					bwInsertFile.close();
 				}
 			} catch (Throwable th) {
-
 			}
 		}
 	}
@@ -95,5 +110,83 @@ public class FileReaderTest {
 			e.printStackTrace();
 		}
 		return "";
+	}
+
+	public static Cardholder getPerson(String caseId, String altIdentification, Date insertDate) {
+		Cardholder ch = new Cardholder();
+
+		Connection c = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		String getCardholder = "SELECT CH.PERSON_ID, CH.CARDHOLDER_ID  FROM PERSON P, CARDHOLDER CH, PROGRAM_ACCESS PA, CASE C "
+				+ " WHERE P.PERSON_ID = CH.PERSON_ID" + " AND CH.CARDHOLDER_ID = PA.CARDHOLDER_ID" + " AND PA.CASE_ID = C.CASE_ID" + " AND C.CASE_NBR = ? "
+				+ " AND CH.INSERT_DATE = ? " + " AND TRIM(P.ALT_IDENTIFICATION) = trim(?) ";
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String url = "jdbc:oracle:thin:@10.237.89.143:1521:tj11gdb4";
+			c = DriverManager.getConnection(url, "ECCNC_60D_053113_01", "ECCNC_60D_053113_01");
+			ps = c.prepareStatement(getCardholder, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ps.setString(1, caseId);
+			ps.setTimestamp(2, new java.sql.Timestamp(insertDate.getTime()));
+			ps.setString(3, altIdentification);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				ch.setPersonId(rs.getLong("PERSON_ID"));
+				ch.setCardholderId(rs.getLong("CARDHOLDER_ID"));
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (c != null) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return ch;
+	}
+}
+
+class Cardholder {
+	long personId;
+	long cardholderId;
+
+	public long getPersonId() {
+		return personId;
+	}
+
+	public void setPersonId(long personId) {
+		this.personId = personId;
+	}
+
+	public long getCardholderId() {
+		return cardholderId;
+	}
+
+	public void setCardholderId(long cardholderId) {
+		this.cardholderId = cardholderId;
+	}
+
+	Cardholder() {
 	}
 }
