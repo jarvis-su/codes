@@ -1,9 +1,16 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import jtrac.JtracMain;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.support.PropertiesBeanDefinitionReader;
+import org.springframework.core.io.ClassPathResource;
+
+import test.HelloBean;
 
 public class Test {
 	public static void main(String[] t) {
@@ -26,12 +33,20 @@ public class Test {
 		System.out.println(sdf.format(beginDate));
 		System.out.println(sdf.format(endDate));
 
-//		Calendar c = Calendar.getInstance();
-//		c.set(Calendar.HOUR_OF_DAY, 20);
-//		System.out.println(sdf.format(c.getTime()));
-		float te  = main.calculateNonWorkingHours(beginDate, endDate);
+		// Calendar c = Calendar.getInstance();
+		// c.set(Calendar.HOUR_OF_DAY, 20);
+		// System.out.println(sdf.format(c.getTime()));
+		float te = main.calculateNonWorkingHours(beginDate, endDate);
 
 		System.out.println(te);
+
+		BeanDefinitionRegistry reg = new DefaultListableBeanFactory();
+		PropertiesBeanDefinitionReader reader = new PropertiesBeanDefinitionReader(reg);
+		reader.loadBeanDefinitions(new ClassPathResource("beanConfig.properties"));
+		BeanFactory factory = (BeanFactory) reg;
+		HelloBean helloBean = (HelloBean) factory.getBean("helloBean");
+		System.out.println(helloBean.getHelloWorld());
+
 	}
 
 }
