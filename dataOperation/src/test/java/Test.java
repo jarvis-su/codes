@@ -1,9 +1,13 @@
 import java.text.ParseException;
+
+import org.apache.commons.lang.StringUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import jtrac.JtracMain;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -40,13 +44,28 @@ public class Test {
 
 		System.out.println(te);
 
-		BeanDefinitionRegistry reg = new DefaultListableBeanFactory();
-		PropertiesBeanDefinitionReader reader = new PropertiesBeanDefinitionReader(reg);
-		reader.loadBeanDefinitions(new ClassPathResource("beanConfig.properties"));
-		BeanFactory factory = (BeanFactory) reg;
-		HelloBean helloBean = (HelloBean) factory.getBean("helloBean");
-		System.out.println(helloBean.getHelloWorld());
+//		BeanDefinitionRegistry reg = new DefaultListableBeanFactory();
+//		PropertiesBeanDefinitionReader reader = new PropertiesBeanDefinitionReader(reg);
+//		reader.loadBeanDefinitions(new ClassPathResource("beanConfig.properties"));
+//		BeanFactory factory = (BeanFactory) reg;
+//		HelloBean helloBean = (HelloBean) factory.getBean("helloBean");
+//		System.out.println(helloBean.getHelloWorld());
+
+
+
+		long seconds = 103 * 3600 + 12*63 + 44;
+		System.out.println(formatDurationInSeconds(seconds));
 
 	}
+
+
+	public static String formatDurationInSeconds(long seconds) {
+    	long hour =seconds/3600;
+//		if(hour>99) return "99:59:59";  // MAX VALUE OF DURATION
+		long minute=(seconds-hour*3600)/60;
+		long second = seconds%60;
+		return StringUtils.leftPad(String.valueOf(hour), 2, '0') + ":"+
+			StringUtils.leftPad(String.valueOf(minute), 2, '0') + ":" + StringUtils.leftPad(String.valueOf(second), 2, '0');
+    }
 
 }
