@@ -15,19 +15,19 @@ declare
            p.minitial,
            p.firstname,
            ch.cardholder_id,
-           rank() over(partition by c.case_nbr, p.alt_identification order by ch.insert_date desc) r
+           rank() over(partition by c.case_nbr, p.alt_identification,p.firstname,p.lastname order by ch.insert_date desc) r
       FROM person p,
            cardholder ch,
            program_access pa,
            case c,
-           (SELECT p.alt_identification, c.case_id, count(1)
+           (SELECT p.alt_identification, c.case_id,p.firstname,p.lastname, count(1)
               FROM person p, cardholder ch, program_access pa, case c
              where p.person_id = ch.person_id
                and ch.cardholder_id = pa.cardholder_id
                and pa.case_id = c.case_id
                and trim(p.alt_identification) is not null
                and pa.access_status_id = 101
-             group by p.alt_identification, c.case_id
+             group by p.alt_identification, c.case_id,p.firstname,p.lastname
             having count(1) > 1) dup
      where p.person_id = ch.person_id
        and ch.cardholder_id = pa.cardholder_id
